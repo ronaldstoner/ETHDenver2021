@@ -22,7 +22,7 @@ from wand.drawing import Drawing
 
 # Attendee data JSON
 attendee = {
-        "name": "Vitalik Buterin",
+        "name": "Ron Stoner",
         "role": "BUIDLER", 
         "ethaddress": "", 
         }
