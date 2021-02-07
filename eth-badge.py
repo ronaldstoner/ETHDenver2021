@@ -20,12 +20,18 @@ from wand.color import Color
 from wand.image import Image
 from wand.drawing import Drawing
 
+# Attendee data JSON
+attendee = {
+        "name": "Vitalik Buterin",
+        "role": "BUIDLER", 
+        "ethaddress": "", 
+        }
+
 # QR Code
 qr_code = Image(filename = 'assets/qr_code.png')
 ethden_logo = Image(filename = 'assets/logo.png')
 
-# Generate attendee badge off data
-# TODO: Get this from JSON
+# Generate attendee badge from attendee JSON data
 with Color('DeepPink') as bg:
     with Image(width=320, height=240, background=bg) as img:
         with Drawing() as draw:
@@ -34,12 +40,13 @@ with Color('DeepPink') as bg:
             img.font_size=30
             # Rotate and start building image
             img.rotate(90)
-            draw.text(int(img.width/2), 50,"Ron Stoner")
+            draw.text(int(img.width/2), 50, attendee["name"])
             # Add in QR code - TODO: Intelligent placement on height
+            # TODO: Generate using a QR code library
             qr_code.resize(125, 125)
             img.composite(qr_code, int(qr_code.width/2), 70)
             # Add in conference role
-            draw.text(int(img.width/2), 240, "BUILDER") # TODO: Pull from JSON
+            draw.text(int(img.width/2), 240, attendee["role"])
             # Add in ETHDEN image
             ethden_logo.resize(40,40)
             img.composite(ethden_logo, (int(img.width/2)-20), 260) # Hacky
@@ -71,11 +78,11 @@ def buttonEvent(channel):
     print("Button #%d pressed for %f seconds." % (channel, time.time() - startTime))
        
 # Display attendee badge
-# TODO: Parse data from JSON and generate image (ImageMagick?)
 # TODO: Animations, grpahics, filters, gifs?
 def displayBadge(channel):
     print(channel)
     print("Displaying attendee badge")
+    #TODO: Security vuln running as root
     subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/badge.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     
 # Display sports castle map 
@@ -84,6 +91,7 @@ def displayBadge(channel):
 def displayMap(channel):
     print(channel)
     print("Displaying castle map")
+    #TODO: Security vuln running as root 
     subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/layout.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 # Display map of Colorado indentifying bars, wineries, distilleries
@@ -94,6 +102,7 @@ def displayMap(channel):
 def displayBeerHunt(channel):
     print(channel)
     print("Displaying Beer Hunt Map")
+    # TODO: Security vuln running as root 
     subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/map.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     
 # Event handler to manage Pi shutdown
