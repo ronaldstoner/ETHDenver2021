@@ -9,8 +9,9 @@
 # 0.1 - Initial PoC on RaspPi w/ TFT screen and static images
 # 0.2 - Added static images for Sports Castle and Beer Hunt map
 # 0.3 - Added wand library to generate attendee badge image
+# 0.4 - Moved attendee metadata into JSON format
 
-version = '0.3'
+version = '0.4'
 
 # Imports
 import subprocess
