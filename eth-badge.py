@@ -30,20 +30,19 @@ attendee = {
         "ethaddress": "0xa42ed1Ac8FB4E9Bc4fc14E1AdcEA608E1EbA874C", 
         }
 
-# QR Code
-#qr_code = Image(filename = 'assets/qr_code.png')
+# Image declerations
 ethden_logo = Image(filename = 'assets/logo.png')
 
+# QR Code - Generate from JSON ethaddress data 
+#qr_code = Image(filename = 'assets/qr_code.png') #Uncomment for static image loading 
 qr = qrcode.QRCode(
         version=None,
         box_size=10,
         border=2)
 qr.add_data(attendee["ethaddress"])
 qr.make(fit=True)
-
-qr_img = qr.make_image(fill='purple', back_color='white')
+qr_img = qr.make_image(fill_color='purple', back_color='white')
 qr_img.save('assets/qr_code.png')
-
 qr_code = Image(filename = 'assets/qr_code.png')
 
 # Generate attendee badge from attendee JSON data
@@ -53,18 +52,21 @@ with Color('DeepPink') as bg:
             draw.fill_color=Color('white')
             draw.text_alignment='center'
             img.font_size=30
+            
+            #Fonts
+            draw.font = 'fonts/Barlow-ExtraBold.ttf'
+
             # Rotate and start building image
             img.rotate(90)
             draw.text(int(img.width/2), 50, attendee["name"])
             # Add in QR code - TODO: Intelligent placement on height
-            # TODO: Generate using a QR code library
             qr_code.resize(125, 125)
             img.composite(qr_code, int(qr_code.width/2), 70)
             # Add in conference role
-            draw.text(int(img.width/2), 240, attendee["role"])
+            draw.text(int(img.width/2), 235, attendee["role"])
             # Add in ETHDEN image
             ethden_logo.resize(40,40)
-            img.composite(ethden_logo, (int(img.width/2)-20), 260) # Hacky
+            img.composite(ethden_logo, (int(img.width/2)-20), 250) # Hacky
             draw(img)
             # Rotate image back for display purposes - horiz vs vert
             img.rotate(90)
