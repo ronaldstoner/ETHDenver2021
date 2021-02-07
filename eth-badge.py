@@ -8,8 +8,9 @@
 # Changelog
 # 0.1 - Initial PoC on RaspPi w/ TFT screen and static images
 # 0.2 - Added static images for Sports Castle and Beer Hunt map
+# 0.3 - Added wand library to generate attendee badge image
 
-version = '0.2'
+version = '0.3'
 
 # Imports
 import subprocess
@@ -17,6 +18,35 @@ import time
 import RPi.GPIO as GPIO
 from wand.color import Color
 from wand.image import Image
+from wand.drawing import Drawing
+
+# QR Code
+qr_code = Image(filename = 'assets/qr_code.png')
+ethden_logo = Image(filename = 'assets/logo.png')
+
+# Generate attendee badge off data
+# TODO: Get this from JSON
+with Color('DeepPink') as bg:
+    with Image(width=320, height=240, background=bg) as img:
+        with Drawing() as draw:
+            draw.fill_color=Color('white')
+            draw.text_alignment='center'
+            img.font_size=30
+            # Rotate and start building image
+            img.rotate(90)
+            draw.text(int(img.width/2), 50,"Ron Stoner")
+            # Add in QR code - TODO: Intelligent placement on height
+            qr_code.resize(125, 125)
+            img.composite(qr_code, int(qr_code.width/2), 70)
+            # Add in conference role
+            draw.text(int(img.width/2), 240, "BUILDER") # TODO: Pull from JSON
+            # Add in ETHDEN image
+            ethden_logo.resize(40,40)
+            img.composite(ethden_logo, (int(img.width/2)-20), 260) # Hacky
+            draw(img)
+            # Rotate image back for display purposes - horiz vs vert
+            img.rotate(90)
+        img.save(filename='assets/badge.png')
 
 # List of BCM channels from RPO.GPIO (printed on the Adafruit PCB next to each button)
 channel_list = [17, 22, 23, 27]
