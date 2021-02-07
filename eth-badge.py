@@ -10,13 +10,15 @@
 # 0.2 - Added static images for Sports Castle and Beer Hunt map
 # 0.3 - Added wand library to generate attendee badge image
 # 0.4 - Moved attendee metadata into JSON format
+# 0.4.1 - Parsing QR code from attendee data JSON
 
-version = '0.4'
+version = '0.4.1'
 
 # Imports
 import subprocess
 import time
 import RPi.GPIO as GPIO
+import qrcode
 from wand.color import Color
 from wand.image import Image
 from wand.drawing import Drawing
@@ -25,12 +27,24 @@ from wand.drawing import Drawing
 attendee = {
         "name": "Ron Stoner",
         "role": "BUIDLER", 
-        "ethaddress": "", 
+        "ethaddress": "0xa42ed1Ac8FB4E9Bc4fc14E1AdcEA608E1EbA874C", 
         }
 
 # QR Code
-qr_code = Image(filename = 'assets/qr_code.png')
+#qr_code = Image(filename = 'assets/qr_code.png')
 ethden_logo = Image(filename = 'assets/logo.png')
+
+qr = qrcode.QRCode(
+        version=None,
+        box_size=10,
+        border=2)
+qr.add_data(attendee["ethaddress"])
+qr.make(fit=True)
+
+qr_img = qr.make_image(fill='purple', back_color='white')
+qr_img.save('assets/qr_code.png')
+
+qr_code = Image(filename = 'assets/qr_code.png')
 
 # Generate attendee badge from attendee JSON data
 with Color('DeepPink') as bg:
