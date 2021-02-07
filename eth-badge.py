@@ -5,15 +5,24 @@
 # Project:      Physical Digital Badge PoC
 # Members:      Ron Stoner (@forwardsecrecy)
 #
+# Changelog
+# 0.1 - Initial PoC on RaspPi w/ TFT screen and static images
+# 0.2 - Added static images for Sports Castle and Beer Hunt map
+
+version = '0.2'
+
+# Imports
 import subprocess
 import time
 import RPi.GPIO as GPIO
+from wand.color import Color
+from wand.image import Image
 
-# list of BCM channels from RPO.GPIO (printed on the Adafruit PCB next to each button)
+# List of BCM channels from RPO.GPIO (printed on the Adafruit PCB next to each button)
 channel_list = [17, 22, 23, 27]
 backlightOn = True
 
-# event handler to toggle the TFT backlight
+# Event handler to toggle the TFT backlight
 def toggleBacklight(channel):
     global backlightOn
     if backlightOn:
@@ -23,7 +32,7 @@ def toggleBacklight(channel):
         backlightOn = True
         backlight.start(100)
 
-# event handler to manage button presses
+# Event handler to manage button presses
 def buttonEvent(channel):
     print(channel)
     startTime = time.time()
@@ -57,7 +66,7 @@ def displayBeerHunt(channel):
     print("Displaying Beer Hunt Map")
     subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/map.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     
-# event handler to manage Pi shutdown
+# Event handler to manage Pi shutdown
 def poweroff(channel):
     startTime = time.time()
     while GPIO.input(channel) == GPIO.LOW:
@@ -65,7 +74,7 @@ def poweroff(channel):
     if (time.time() - startTime) > 2:
         subprocess.call(['sudo reboot -n'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-# initialize GPIO library
+# Initialize GPIO library
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(channel_list, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(18, GPIO.OUT)
@@ -92,6 +101,6 @@ try:
 except:
     pass
 
-# exit gracefully
+# Exit gracefully
 backlight.stop()
 GPIO.cleanup()
