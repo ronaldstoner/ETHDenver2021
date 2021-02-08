@@ -1,0 +1,25 @@
+{
+  "name": "badge-mapping",
+  "version": "0.0.0",
+  "description": "Mapping for ETHDenver 2021 Badges with OpenLayers tiles",
+  "main": "index.js",
+  "repository": "https://github.com/ronaldstoner/ETHDenver2021.git",
+  "author": "A hacker",
+  "license": "MIT",
+  "dependencies": {
+    "@types/ol": "^6.4.2",
+    "babel-loader": "^8.2.2",
+    "html-webpack-plugin": "^5.0.0",
+    "ol": "^6.5.0"
+  },
+  "devDependencies": {
+    "parcel": "1.12.4",
+    "typescript": "^4.1.3",
+    "webpack": "^5.21.2",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "scripts": {
+    "build": "./build.sh"
+  }
+}
