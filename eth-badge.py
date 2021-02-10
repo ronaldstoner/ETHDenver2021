@@ -11,8 +11,10 @@
 # 0.3 - Added wand library to generate attendee badge image
 # 0.4 - Moved attendee metadata into JSON format
 # 0.4.1 - Parsing QR code from attendee data JSON
-
-version = '0.4.1'
+# 0.5 - Added FIO code generation
+# 0.6 - Added 2nd function to primay buttons (eth badge/fio badge)
+# 0.7 - Added NFT parser and display function
+version = '0.7'
 
 # Imports
 import subprocess
@@ -20,6 +22,7 @@ import time
 import RPi.GPIO as GPIO
 import qrcode
 import requests
+import os
 from wand.color import Color
 from wand.image import Image
 from wand.drawing import Drawing
@@ -36,15 +39,20 @@ attendee = {
 ethden_logo = Image(filename = '/home/pi/ETHDenver2021/assets/logo.png')
 fio_logo = Image(filename = '/home/pi/ETHDenver2021/assets/fio_logo.png')
 
-# Attendee badge and map display bits - ETHDenver/FIO Conferece/Beer
-badgeDisplayBit = 0
-mapDisplayBit = 0 
-
-# Main execution loop counter
-loop_counter = 0
+# Display bits and loop counters
+badgeDisplayBit = 0	# Badge view display bit
+mapDisplayBit = 0 	# Map view display bit
+nft_counter = 0 	# NFT display counter
+loop_counter = 0	# Main execution loop counter
 
 # API Keys - Add your Ethplorer API key here
 ethplorer_api = 'freekey'
+
+# Load NFT file list
+try:
+    nft_filelist = os.listdir(r"/home/pi/ETHDenver2021/nft_images/")
+except:
+    print("Could not load NFT artwork from local system")
 
 # QR Code - Generate QR codes from JSON address data 
 #qr_code = Image(filename = 'assets/qr_code.png') #Uncomment for static image loading 
@@ -205,7 +213,24 @@ def displayMap(channel):
         mapDisplayBit = 0
 
 def displayNFTs(channel):
-    print("NFTs")
+    global nft_filelist
+    global nft_counter
+    # TODO: Security vuln running as root
+    print("Displaying NFT " + str(nft_counter) + " - " + str(nft_filelist[nft_counter]))
+    subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/nft_images/' + nft_filelist[nft_counter]], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)    
+    nft_counter = nft_counter + 1
+    # Check if out of bounds on array and if so reset display counter
+    if nft_counter >= len(nft_filelist):
+        nft_counter = 0
+
+    #try:
+        #print("NFTs")
+    #nft_filelist = os.listdir(r"/home/pi/ETHDenver2021/nft_images/")
+        
+    #print(nft_filelist)
+
+    #except:
+        #print("Could not display NFTs")
 
 # Event handler to manage Pi shutdown
 def poweroff(channel):
