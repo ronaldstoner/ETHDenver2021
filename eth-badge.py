@@ -33,11 +33,15 @@ attendee = {
         }
 
 # Image declerations
-ethden_logo = Image(filename = 'assets/logo.png')
-fio_logo = Image(filename = 'assets/fio_logo.png')
+ethden_logo = Image(filename = '/home/pi/ETHDenver2021/assets/logo.png')
+fio_logo = Image(filename = '/home/pi/ETHDenver2021/assets/fio_logo.png')
 
-# Attendee badge display bit - ETHDenver/FIO
+# Attendee badge and map display bits - ETHDenver/FIO Conferece/Beer
 badgeDisplayBit = 0
+mapDisplayBit = 0 
+
+# Main execution loop counter
+loop_counter = 0
 
 # API Keys
 # Add your Ethplorer API key here
@@ -86,7 +90,7 @@ for token in tokenList['tokens']:
         file.close
         counter = counter + 1
     except:
-        print("Could not get token art for token ", counter)
+        #print("Could not get token art for token ", counter)
         counter = counter + 1 
 #except:
 #    print("ERROR: Could not pull NFT images")
@@ -166,7 +170,7 @@ def buttonEvent(channel):
     print("Button #%d pressed for %f seconds." % (channel, time.time() - startTime))
        
 # Display attendee badge
-# TODO: Animations, grpahics, filters, gifs?
+# TODO: Animations, graphics, filters, gifs?
 def displayBadge(channel):    
     global badgeDisplayBit
     if badgeDisplayBit == 0:
@@ -174,8 +178,7 @@ def displayBadge(channel):
         #TODO: Security vuln running as root
         subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/badge.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         badgeDisplayBit = 1
-        return
-    elif badgeDisplayBit == 1:
+    else:
         print("Displaying FIO badge")
         subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/fio.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         badgeDisplayBit = 0
@@ -184,10 +187,19 @@ def displayBadge(channel):
 # TODO: Get layout of sports castle
 # TODO: Mapbox it
 def displayMap(channel):
-    print(channel)
-    print("Displaying castle map")
-    #TODO: Security vuln running as root 
-    subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/layout.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    global mapDisplayBit
+    if mapDisplayBit == 0:
+        #print(channel)
+        print("Displaying Sports Castle map")
+        #TODO: Security vuln running as root 
+        subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/layout.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        mapDisplayBit = 1
+    else:
+	#print(channel)
+        print("Displaying Beer Hunt map")
+        # TODO: Security vuln running as root 
+        subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/map.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        mapDisplayBit = 0
 
 # Display map of Colorado indentifying bars, wineries, distilleries
 # TODO: Mapbox
@@ -227,12 +239,26 @@ GPIO.add_event_detect(22, GPIO.FALLING, callback=displayMap, bouncetime=200)
 GPIO.add_event_detect(23, GPIO.FALLING, callback=displayBeerHunt, bouncetime=200)
 #GPIO.add_event_detect(27, GPIO.FALLING, callback=poweroff, bouncetime=200)
 
+# Display default main screen (ETHBadge)
+displayBadge(17)
+
 # Looping for exit signal
 try:
+    time.sleep(0.1)
+    loop_counter = loop_counter + 1 
+    if loop_counter >= 10:
+        displayNFTs()
+        loop_counter = 0
     GPIO.wait_for_edge(27, GPIO.FALLING)
     print("Exit button pressed.")
 
 except:
+    time.sleep(0.1)
+    loop_counter = loop_counter + 1 
+    print(loop_counter)
+    if loop_counter >= 10:
+        displayNFTs()
+        loop_counter = 0
     pass
 
 # Exit gracefully
