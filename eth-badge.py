@@ -19,6 +19,7 @@ import subprocess
 import time
 import RPi.GPIO as GPIO
 import qrcode
+import requests
 from wand.color import Color
 from wand.image import Image
 from wand.drawing import Drawing
@@ -28,12 +29,21 @@ attendee = {
         "name": "Ron Stoner",
         "role": "BUIDLER", 
         "ethaddress": "0xa42ed1Ac8FB4E9Bc4fc14E1AdcEA608E1EbA874C", 
+        "fioaddress": "stoner@shapeshift"
         }
 
 # Image declerations
 ethden_logo = Image(filename = 'assets/logo.png')
+fio_logo = Image(filename = 'assets/fio_logo.png')
 
-# QR Code - Generate from JSON ethaddress data 
+# Attendee badge display bit - ETHDenver/FIO
+badgeDisplayBit = 0
+
+# API Keys
+# Add your Ethplorer API key here
+ethplorer_api = 'freekey'
+
+# QR Code - Generate QR codes from JSON address data 
 #qr_code = Image(filename = 'assets/qr_code.png') #Uncomment for static image loading 
 qr = qrcode.QRCode(
         version=None,
@@ -45,17 +55,54 @@ qr_img = qr.make_image(fill_color='purple', back_color='white')
 qr_img.save('assets/qr_code.png')
 qr_code = Image(filename = 'assets/qr_code.png')
 
-# Generate attendee badge from attendee JSON data
+# QR Code - Generate FIO QR code from JSON data
+qr2 = qrcode.QRCode(
+        version=None,
+        box_size=10,
+        border=2)
+qr2.add_data(attendee["fioaddress"])
+qr2.make(fit=True)
+qr2_img = qr2.make_image(fill_color='blue', back_color='white')
+qr2_img.save('assets/qr_code_fio.png')
+qr_code_fio = Image(filename = 'assets/qr_code_fio.png')
+
+# Get list of NFTs by address
+print("Getting list of NFTs from ETH address...")
+#try:
+tokenList = requests.get('https://api.ethplorer.io/getAddressInfo/' + attendee['ethaddress'] + '?apiKey=' + ethplorer_api).json()
+print(tokenList)
+
+print("Pulling NFT images from token list...")
+counter = 0 
+for token in tokenList['tokens']:
+    #if tokenList['tokens']['tokenInfo']['image']:
+    #print("Retreiving " + token['tokens'][counter]['tokenInfo']['website'] + token['tokens'][counter]['tokenInfo']['image']) 
+    try:
+        erc20_img = requests.get(tokenList['tokens'][counter]['tokenInfo']['website'] + tokenList['tokens'][counter]['tokenInfo']['image'])
+        print("Retrieved token ", counter, tokenList['tokens'][counter]['tokenInfo']['name'])
+        print(erc20_img)
+        file.open('nft_images/' + tokenList['tokens'][counter]['tokenInfo']['name'] + '.png')        
+        file.write(response.bytes)
+        file.close
+        counter = counter + 1
+    except:
+        print("Could not get token art for token ", counter)
+        counter = counter + 1 
+#except:
+#    print("ERROR: Could not pull NFT images")
+#print("Request Status:", r.status_code)
+#print("Text: ", r.text())
+#print("JSON: ", r.json())
+
+# Generate ETHDenver attendee badge from attendee JSON data
 with Color('DeepPink') as bg:
     with Image(width=320, height=240, background=bg) as img:
         with Drawing() as draw:
             draw.fill_color=Color('white')
             draw.text_alignment='center'
             img.font_size=30
-            
             #Fonts
             draw.font = 'fonts/Barlow-ExtraBold.ttf'
-
             # Rotate and start building image
             img.rotate(90)
             draw.text(int(img.width/2), 50, attendee["name"])
@@ -71,6 +118,30 @@ with Color('DeepPink') as bg:
             # Rotate image back for display purposes - horiz vs vert
             img.rotate(90)
         img.save(filename='assets/badge.png')
+
+# Generate FIO badge display and QR code for FIO address from JSON data
+with Color('Blue') as bg:
+    with Image(width=320, height=240, background=bg) as img2:
+        with Drawing() as draw:
+            draw.fill_color=Color('white')
+            draw.text_alignment='center'
+            img2.font_size=20
+            #Fonts
+            draw.font = 'fonts/Barlow-ExtraBold.ttf'
+            # Rotate and start building image
+            img2.rotate(90)
+            # Add in QR code - TODO: Intelligent placement on height
+            qr_code_fio.resize(125, 125)
+            img2.composite(qr_code_fio, int(qr_code_fio.width/2), 70)
+            # Add in conference role
+            draw.text(int(img2.width/2), 235, attendee["fioaddress"])
+            # Add in FIO image
+            fio_logo.resize(60,40)
+            img2.composite(fio_logo, (int(img2.width/2)-20), 250) # Hacky
+            draw(img2)
+            # Rotate image back for display purposes - horiz vs vert
+            img2.rotate(90)
+        img2.save(filename='assets/fio.png')
 
 # List of BCM channels from RPO.GPIO (printed on the Adafruit PCB next to each button)
 channel_list = [17, 22, 23, 27]
@@ -97,11 +168,19 @@ def buttonEvent(channel):
 # Display attendee badge
 # TODO: Animations, grpahics, filters, gifs?
 def displayBadge(channel):
-    print(channel)
-    print("Displaying attendee badge")
-    #TODO: Security vuln running as root
-    subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/badge.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    global badgeDisplayBit
     
+    if badgeDisplayBit == 0:
+        print("Displaying ETHDenver badge")
+        #TODO: Security vuln running as root
+        subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/badge.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        badgeDisplayBit = 1
+        return
+    else:
+        print("Displaying FIO badge")
+        subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/fio.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        badgeDisplayBit = 0
+        return
 # Display sports castle map 
 # TODO: Get layout of sports castle
 # TODO: Mapbox it
