@@ -2,7 +2,7 @@
 #
 # ETHDenver 2021 Hackathon  
 #
-# Project:      Physical Digital Badge PoC
+# Project:      ETHDenver Hardware Badge PoC
 # Members:      Ron Stoner (@forwardsecrecy), Paul Pham (@cryptogoth)
 #
 # Changelog
