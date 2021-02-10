@@ -137,7 +137,7 @@ with Color('Blue') as bg:
             draw.text(int(img2.width/2), 235, attendee["fioaddress"])
             # Add in FIO image
             fio_logo.resize(60,40)
-            img2.composite(fio_logo, (int(img2.width/2)-20), 250) # Hacky
+            img2.composite(fio_logo, (int(img2.width/2)-30), 250) # Hacky
             draw(img2)
             # Rotate image back for display purposes - horiz vs vert
             img2.rotate(90)
@@ -167,20 +167,19 @@ def buttonEvent(channel):
        
 # Display attendee badge
 # TODO: Animations, grpahics, filters, gifs?
-def displayBadge(channel):
+def displayBadge(channel):    
     global badgeDisplayBit
-    
     if badgeDisplayBit == 0:
         print("Displaying ETHDenver badge")
         #TODO: Security vuln running as root
         subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/badge.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         badgeDisplayBit = 1
         return
-    else:
+    elif badgeDisplayBit == 1:
         print("Displaying FIO badge")
         subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/fio.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         badgeDisplayBit = 0
-        return
+
 # Display sports castle map 
 # TODO: Get layout of sports castle
 # TODO: Mapbox it
