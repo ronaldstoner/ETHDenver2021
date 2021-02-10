@@ -43,8 +43,7 @@ mapDisplayBit = 0
 # Main execution loop counter
 loop_counter = 0
 
-# API Keys
-# Add your Ethplorer API key here
+# API Keys - Add your Ethplorer API key here
 ethplorer_api = 'freekey'
 
 # QR Code - Generate QR codes from JSON address data 
@@ -72,9 +71,11 @@ qr_code_fio = Image(filename = 'assets/qr_code_fio.png')
 
 # Get list of NFTs by address
 print("Getting list of NFTs from ETH address...")
-#try:
-tokenList = requests.get('https://api.ethplorer.io/getAddressInfo/' + attendee['ethaddress'] + '?apiKey=' + ethplorer_api).json()
-print(tokenList)
+try:
+    tokenList = requests.get('https://api.ethplorer.io/getAddressInfo/' + attendee['ethaddress'] + '?apiKey=' + ethplorer_api).json()
+except:
+    print("Could not get token list from ETH address")
+#print(tokenList)
 
 print("Pulling NFT images from token list...")
 counter = 0 
@@ -84,7 +85,6 @@ for token in tokenList['tokens']:
     try:
         erc20_img = requests.get(tokenList['tokens'][counter]['tokenInfo']['website'] + tokenList['tokens'][counter]['tokenInfo']['image'])
         print("Retrieved token ", counter, tokenList['tokens'][counter]['tokenInfo']['name'])
-        print(erc20_img)
         file.open('nft_images/' + tokenList['tokens'][counter]['tokenInfo']['name'] + '.png')        
         file.write(response.bytes)
         file.close
@@ -183,7 +183,7 @@ def displayBadge(channel):
         subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/fio.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         badgeDisplayBit = 0
 
-# Display sports castle map 
+# Display sports castle map or beer hunt map depending on bit state
 # TODO: Get layout of sports castle
 # TODO: Mapbox it
 def displayMap(channel):
@@ -195,23 +195,18 @@ def displayMap(channel):
         subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/layout.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         mapDisplayBit = 1
     else:
-	#print(channel)
+        #Display Beer Hunt Map identifying Colorado bars, wineries, and distilleries
+        # TODO: Mapbox this
+        # TODO: Get updated map
+        #print(channel)
         print("Displaying Beer Hunt map")
         # TODO: Security vuln running as root 
         subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/map.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         mapDisplayBit = 0
 
-# Display map of Colorado indentifying bars, wineries, distilleries
-# TODO: Mapbox
-# TODO: Compile list of location data
-# TODO: Generate markers based off location data
-# TODO: Load map tile data
-def displayBeerHunt(channel):
-    print(channel)
-    print("Displaying Beer Hunt Map")
-    # TODO: Security vuln running as root 
-    subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/map.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    
+def displayNFTs(channel):
+    print("NFTs")
+
 # Event handler to manage Pi shutdown
 def poweroff(channel):
     startTime = time.time()
@@ -228,15 +223,15 @@ backlight = GPIO.PWM(18, 1000)
 backlight.start(100)
 
 # Console output
-print("Button #17 (button 1) displays the attendee badge")
-print("Button #22 (button 2) displays Sports Castle map")
-print("Button #23 (button 3) displays Beer Hunt map")
+print("Button #17 (button 1) displays the attendee badge / FIO address")
+print("Button #22 (button 2) displays Sports Castle map / CO Beer Hunt map")
+print("Button #23 (button 3) displays NFT tokens")
 print("Button #27 (button 3) exits.")
 
 # Button event listeners and callbacks
 GPIO.add_event_detect(17, GPIO.FALLING, callback=displayBadge, bouncetime=200)
 GPIO.add_event_detect(22, GPIO.FALLING, callback=displayMap, bouncetime=200)
-GPIO.add_event_detect(23, GPIO.FALLING, callback=displayBeerHunt, bouncetime=200)
+GPIO.add_event_detect(23, GPIO.FALLING, callback=displayNFTs, bouncetime=200)
 #GPIO.add_event_detect(27, GPIO.FALLING, callback=poweroff, bouncetime=200)
 
 # Display default main screen (ETHBadge)
