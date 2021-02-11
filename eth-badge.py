@@ -54,6 +54,12 @@ try:
 except:
     print("Could not load NFT artwork from local system")
 
+# Load Beer Hunt file list
+try:
+    beerhunt_filelist = os.listdir(r"/home/pi/ETHDenver2021/beerhunt/")
+except: 
+    print("Could not load local wine, beer, business images")
+
 # QR Code - Generate QR codes from JSON address data 
 #qr_code = Image(filename = 'assets/qr_code.png') #Uncomment for static image loading 
 qr = qrcode.QRCode(
@@ -63,8 +69,8 @@ qr = qrcode.QRCode(
 qr.add_data(attendee["ethaddress"])
 qr.make(fit=True)
 qr_img = qr.make_image(fill_color='purple', back_color='white')
-qr_img.save('assets/qr_code.png')
-qr_code = Image(filename = 'assets/qr_code.png')
+qr_img.save('/home/pi/ETHDenver2021/assets/qr_code.png')
+qr_code = Image(filename = '/home/pi/ETHDenver2021/assets/qr_code.png')
 
 # QR Code - Generate FIO QR code from JSON data
 qr2 = qrcode.QRCode(
@@ -74,8 +80,8 @@ qr2 = qrcode.QRCode(
 qr2.add_data(attendee["fioaddress"])
 qr2.make(fit=True)
 qr2_img = qr2.make_image(fill_color='blue', back_color='white')
-qr2_img.save('assets/qr_code_fio.png')
-qr_code_fio = Image(filename = 'assets/qr_code_fio.png')
+qr2_img.save('/home/pi/ETHDenver2021/assets/qr_code_fio.png')
+qr_code_fio = Image(filename = '/home/pi/ETHDenver2021/assets/qr_code_fio.png')
 
 # Get list of NFTs by address
 print("Getting list of NFTs from ETH address...")
@@ -86,22 +92,21 @@ except:
 #print(tokenList)
 
 print("Pulling NFT images from token list...")
-counter = 0 
-for token in tokenList['tokens']:
-    #if tokenList['tokens']['tokenInfo']['image']:
-    #print("Retreiving " + token['tokens'][counter]['tokenInfo']['website'] + token['tokens'][counter]['tokenInfo']['image']) 
-    try:
-        erc20_img = requests.get(tokenList['tokens'][counter]['tokenInfo']['website'] + tokenList['tokens'][counter]['tokenInfo']['image'])
-        print("Retrieved token ", counter, tokenList['tokens'][counter]['tokenInfo']['name'])
-        file.open('nft_images/' + tokenList['tokens'][counter]['tokenInfo']['name'] + '.png')        
-        file.write(response.bytes)
-        file.close
-        counter = counter + 1
-    except:
-        #print("Could not get token art for token ", counter)
-        counter = counter + 1 
-#except:
-#    print("ERROR: Could not pull NFT images")
+try:
+    counter = 0 
+    for token in tokenList['tokens']:
+        try:
+            erc20_img = requests.get(tokenList['tokens'][counter]['tokenInfo']['website'] + tokenList['tokens'][counter]['tokenInfo']['image'])
+            print("Retrieved token ", counter, tokenList['tokens'][counter]['tokenInfo']['name'])
+            file.open('nft_images/' + tokenList['tokens'][counter]['tokenInfo']['name'] + '.png')        
+            file.write(response.bytes)
+            file.close
+            counter = counter + 1
+        except:
+            #print("Could not get token art for token ", counter)
+            counter = counter + 1 
+except:
+    print("ERROR: Could not pull NFT images")
 #print("Request Status:", r.status_code)
 #print("Text: ", r.text())
 #print("JSON: ", r.json())
@@ -129,7 +134,7 @@ with Color('DeepPink') as bg:
             draw(img)
             # Rotate image back for display purposes - horiz vs vert
             img.rotate(90)
-        img.save(filename='assets/badge.png')
+        img.save(filename='/home/pi/ETHDenver2021/assets/badge.png')
 
 # Generate FIO badge display and QR code for FIO address from JSON data
 with Color('Blue') as bg:
@@ -139,7 +144,7 @@ with Color('Blue') as bg:
             draw.text_alignment='center'
             img2.font_size=20
             #Fonts
-            draw.font = 'fonts/Barlow-ExtraBold.ttf'
+            draw.font = '/home/pi/ETHDenver2021/fonts/Barlow-ExtraBold.ttf'
             # Rotate and start building image
             img2.rotate(90)
             # Add in QR code - TODO: Intelligent placement on height
@@ -153,7 +158,7 @@ with Color('Blue') as bg:
             draw(img2)
             # Rotate image back for display purposes - horiz vs vert
             img2.rotate(90)
-        img2.save(filename='assets/fio.png')
+        img2.save(filename='/home/pi/ETHDenver2021/assets/fio.png')
 
 # List of BCM channels from RPO.GPIO (printed on the Adafruit PCB next to each button)
 channel_list = [17, 22, 23, 27]
@@ -201,8 +206,7 @@ def displayMap(channel):
         print("Displaying Sports Castle map")
         #TODO: Security vuln running as root 
         subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/layout.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        mapDisplayBit = 1
-    else:
+    if mapDisplayBit == 1:
         #Display Beer Hunt Map identifying Colorado bars, wineries, and distilleries
         # TODO: Mapbox this
         # TODO: Get updated map
@@ -210,7 +214,15 @@ def displayMap(channel):
         print("Displaying Beer Hunt map")
         # TODO: Security vuln running as root 
         subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/assets/map.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if mapDisplayBit == 2:
+        print("Displaying 1UP image")
+        subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/beerhunt/1up.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if mapDisplayBit == 3:
+        print("Displaying Balistreri image")
+        subprocess.call(['sudo fbi -T 2 -d /dev/fb1 -noverbose -a /home/pi/ETHDenver2021/beerhunt/balistreri.png'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         mapDisplayBit = 0
+        return
+    mapDisplayBit = mapDisplayBit + 1 
 
 def displayNFTs(channel):
     global nft_filelist
