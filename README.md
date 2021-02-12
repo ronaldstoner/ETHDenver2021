@@ -30,28 +30,34 @@ The prototype was designed over the course of a few days by TeamBadge using the 
 - FIO addresses
 - Adafruit TFT display and drivers
 
-## Features
-- Attendee Badge View
--  - Programatically generated from attendee JSON data
-	- Can be scripted to run in batches and pre-loaded to badges -OR-
-	- Generate badge attendee data and image on the fly
-- FIO Address View
-	- FIO integration bounty
-	- Can be scripted to run in batches and pre-loaded to badges -OR-
-	- Generate badge attendee data and image on the fly
-- Sports Castle Floor Map
-	- Opportunities for heat mapping (online only mode)
-	- Track which exhibits are popular
-	- Bathroom wait estimated timer
-- Regional Map
-	- ColoradoJam Department of Agriculture bounty
-	- Load map tiles based on city, county, or state (very large)
-- Local Business Advertisement
-	- Sponsorships
-	- NFT hunt
+# Features
+## Attendee Badge View
+
+  -  Programatically generated from attendee JSON data
+  - Can be scripted to run in batches and pre-loaded to badges -OR-
+  - Generate badge attendee data and image on the fly
+
+## FIO Address View
+
+  - FIO integration bounty
+  - Can be scripted to run in batches and pre-loaded to badges -OR-
+  - Generate badge attendee data and image on the fly
+
+## Sports Castle Floor Map
+
+  - Opportunities for heat mapping (online only mode)
+  - Track which exhibits are popular
+  - Bathroom wait estimated timer
+  - Regional Map
+  - ColoradoJam Department of Agriculture bounty
+  - Load map tiles based on city, county, or state (very large)
+  - Local Business Advertisement
+  - Sponsorships
+  - NFT hunt
 
 ## PCB Silkscreen Proof of Concept
 While the prototyping phase took place on a Raspberry Pi, the ultimate end goal is to produce and fabricate a custom PCB hardware badge design for ETHDenver. Unfortunately due to the length of the hackathon we were not able to fabricate a physical badge, but did want to provide a silkscreen proof of concept and images to convey what a physical badge may look like.
+
 
 ## Future Features 
 - Scaling down [Hardware]
