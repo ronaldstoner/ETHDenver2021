@@ -31,6 +31,7 @@ The prototype was designed over the course of a few days by TeamBadge using the 
 - Adafruit TFT display and drivers
 - InkScape
 - Eagle PCB CAD
+- Ethplorer API
 
 # Features
 ## Attendee Badge View
