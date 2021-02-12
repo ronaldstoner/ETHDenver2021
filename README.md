@@ -29,6 +29,8 @@ The prototype was designed over the course of a few days by TeamBadge using the 
 - Wand Image library
 - FIO addresses
 - Adafruit TFT display and drivers
+- InkScape
+- Eagle PCB CAD
 
 # Features
 ## Attendee Badge View
