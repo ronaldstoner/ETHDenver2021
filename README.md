@@ -2,7 +2,7 @@
 
 Conferences and hackathons have been creating custom hardware based badges for attendees to use, hackers to hack on, gamers to game on, and businesses to integrate with.
  
-Why not ETHDenver?
+**Why not ETHDenver?**
 
 TeamBadge set out a mission during this hackathon in order to create an open source attendee hardware badge for the ETHDenver conference. While the designs and code are very much hackathon quality level, we have duplicated existing analog conference badge functionality (attendee name, role, and QR code). Going past our initial MVP goal, we added additional functionality including a FIO address view, map of the conference floor, regional maps, and advertisement cards for local businesses. 
 
