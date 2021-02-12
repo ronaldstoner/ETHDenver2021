@@ -17,7 +17,6 @@ Demo Video - https://www.youtube.com/watch?v=E1VwFemwl1w
 PCB Silkscreen -   
 
 ## Prototype
-<img src="https://github.com/ronaldstoner/ETHDenver2021/blob/main/examples/badge_ex.jpeg?raw=true" width="300">}  
 The prototype was designed over the course of a few days by TeamBadge using the following hardware:
  - Raspberry Pi 
  - Pi WiFi dongle (optional, but required for online mode)
