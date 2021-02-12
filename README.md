@@ -20,7 +20,7 @@ PCB Silkscreen -
 The prototype was designed over the course of a few days by TeamBadge using the following hardware:
  - Raspberry Pi 
  - Pi WiFi dongle (optional, but required for online mode)
- - Adafruit TFT 2.3inch 320x240 Touch Screen
+ - Adafruit TFT 2.8inch 320x240 Touch Screen
  - 4 Physical touch buttons
  - External battery pack
  
