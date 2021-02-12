@@ -17,6 +17,7 @@ Demo Video - https://www.youtube.com/watch?v=E1VwFemwl1w
 PCB Silkscreen -   
 
 ## Prototype
+<img src="https://github.com/ronaldstoner/ETHDenver2021/blob/main/examples/badge_ex.jpeg?raw=true" width="300">}  
 The prototype was designed over the course of a few days by TeamBadge using the following hardware:
  - Raspberry Pi 
  - Pi WiFi dongle (optional, but required for online mode)
@@ -32,19 +33,19 @@ The prototype was designed over the course of a few days by TeamBadge using the 
 
 # Features
 ## Attendee Badge View
-
+<img src="https://github.com/ronaldstoner/ETHDenver2021/blob/main/examples/badge_ex.jpeg?raw=true" width="300">}  
   - Programatically generated from attendee JSON data
   - Can be scripted to run in batches and pre-loaded to badges -OR-
   - Generate badge attendee data and image on the fly
 
 ## FIO Address View
-
+<img src="https://github.com/ronaldstoner/ETHDenver2021/blob/main/examples/fio_ex.jpeg?raw=true" width="300">}  
   - FIO integration bounty
   - Can be scripted to run in batches and pre-loaded to badges -OR-
   - Generate badge attendee data and image on the fly
 
 ## Sports Castle Floor Map
-![Image](/assets/layout.png?raw=true)  
+![Image](/assets/layout.png?raw=true)
   - Opportunities for heat mapping (online only mode)
   - Track which exhibits are popular
   - Bathroom wait estimated timer
@@ -55,7 +56,7 @@ The prototype was designed over the course of a few days by TeamBadge using the 
   - Load map tiles based on city, county, or state (very large)
  
 ## Local Business Advertisement
-![Image](/beerhunt/1up.png?raw=true)  
+![Image](/beerhunt/1up.png?raw=true) <img src="https://github.com/ronaldstoner/ETHDenver2021/blob/main/examples/1up_ex.jpeg?raw=true" width="300">}  
   - Sponsorships
   - NFT hunt
 
