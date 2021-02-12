@@ -58,11 +58,14 @@ The prototype was designed over the course of a few days by TeamBadge using the 
 ## Regional Map
 ![Image](/assets/map.png?raw=true)  
   - ColoradoJam Department of Agriculture bounty
+  - Provides maps and locations for points of interest around the conference 
   - Load map tiles based on city, county, or state (very large)
  
 ## Local Business Advertisement
 ![Image](/beerhunt/1up.png?raw=true) <img src="https://github.com/ronaldstoner/ETHDenver2021/blob/main/examples/1up_ex.jpeg?raw=true" width="300">}  
   - Sponsorships
+  - Advertisements
+  - Daily Announcements
   - NFT hunt
 
 ## NFT Viewer/Screensaver
