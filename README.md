@@ -33,7 +33,7 @@ The prototype was designed over the course of a few days by TeamBadge using the 
 # Features
 ## Attendee Badge View
 
-  -  Programatically generated from attendee JSON data
+  - Programatically generated from attendee JSON data
   - Can be scripted to run in batches and pre-loaded to badges -OR-
   - Generate badge attendee data and image on the fly
 
@@ -44,14 +44,18 @@ The prototype was designed over the course of a few days by TeamBadge using the 
   - Generate badge attendee data and image on the fly
 
 ## Sports Castle Floor Map
-
+![Image](/assets/layout.png?raw=true)  
   - Opportunities for heat mapping (online only mode)
   - Track which exhibits are popular
   - Bathroom wait estimated timer
-  - Regional Map
+
+## Regional Map
+![Image](/assets/map.png?raw=true)  
   - ColoradoJam Department of Agriculture bounty
   - Load map tiles based on city, county, or state (very large)
-  - Local Business Advertisement
+ 
+## Local Business Advertisement
+![Image](/beerhunt/1up.png?raw=true)  
   - Sponsorships
   - NFT hunt
 
