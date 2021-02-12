@@ -36,6 +36,7 @@ The prototype was designed over the course of a few days by TeamBadge using the 
   - Programatically generated from attendee JSON data
   - Can be scripted to run in batches and pre-loaded to badges -OR-
   - Generate badge attendee data and image on the fly
+  - Interact with vendors (POAP/NFTs/scanning badge QR codes)
 
 ## FIO Address View
 <img src="https://github.com/ronaldstoner/ETHDenver2021/blob/main/examples/fio_ex.jpeg?raw=true" width="300">}  
