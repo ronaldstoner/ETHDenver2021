@@ -7,14 +7,14 @@ Why not ETHDenver?
 TeamBadge set out a mission during this hackathon in order to create an open source attendee hardware badge for the ETHDenver conference. While the designs and code are very much hackathon quality level, we have duplicated existing analog conference badge functionality (attendee name, role, and QR code). Going past our initial MVP goal, we added additional functionality including a FIO address view, map of the conference floor, regional maps, and advertisement cards for local businesses. 
 
 ## TeamBadge
-Ronald Stoner - @ronaldstoner (GitHub) / @forwardsecrecy (Twitter)
+Ronald Stoner - @ronaldstoner (GitHub) / @forwardsecrecy (Twitter)  
 Paul Pham - @cryptogoth (GitHub)
 
 ## Hackathon Links
-Github - https://github.com/ronaldstoner/ETHDenver2021
-Presentation - https://docs.google.com/presentation/d/1lKfAteGLD9OGmtw0hz3KvVq7pTEihyAI2j_oX4J-8Pw/edit?usp=sharing
-Demo Video -  
-PCB Silkscreen - 
+Github - https://github.com/ronaldstoner/ETHDenver2021  
+Presentation - https://docs.google.com/presentation/d/1lKfAteGLD9OGmtw0hz3KvVq7pTEihyAI2j_oX4J-8Pw/edit?usp=sharing  
+Demo Video -    
+PCB Silkscreen -   
 
 ## Prototype
 The prototype was designed over the course of a few days by TeamBadge using the following hardware:
