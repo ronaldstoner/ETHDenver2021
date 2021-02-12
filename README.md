@@ -14,7 +14,7 @@ Paul Pham - @cryptogoth (GitHub)
 Github - https://github.com/ronaldstoner/ETHDenver2021  
 Presentation - https://docs.google.com/presentation/d/1lKfAteGLD9OGmtw0hz3KvVq7pTEihyAI2j_oX4J-8Pw/edit?usp=sharing  
 Demo Video - https://www.youtube.com/watch?v=E1VwFemwl1w  
-PCB Silkscreen -   
+PCB Silkscreen - https://github.com/ronaldstoner/ETHDenver2021/tree/main/pcb  
 
 ## Prototype
 The prototype was designed over the course of a few days by TeamBadge using the following hardware:
@@ -61,8 +61,9 @@ The prototype was designed over the course of a few days by TeamBadge using the 
   - NFT hunt
 
 ## PCB Silkscreen Proof of Concept
+<img src="https://github.com/ronaldstoner/ETHDenver2021/blob/main/examples/ufo_silkscreen.png?raw=true" width="400">
+  
 While the prototyping phase took place on a Raspberry Pi, the ultimate end goal is to produce and fabricate a custom PCB hardware badge design for ETHDenver. Unfortunately due to the length of the hackathon we were not able to fabricate a physical badge, but did want to provide a silkscreen proof of concept and images to convey what a physical badge may look like.
-
 
 ## Future Features 
 - Scaling down [Hardware]
