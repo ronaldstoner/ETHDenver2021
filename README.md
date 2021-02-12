@@ -18,31 +18,33 @@ PCB Silkscreen - https://github.com/ronaldstoner/ETHDenver2021/tree/main/pcb
 
 ## Prototype
 The prototype was designed over the course of a few days by TeamBadge using the following hardware:
- - Raspberry Pi 
- - Pi WiFi dongle (optional, but required for online mode)
- - Adafruit TFT 2.8inch 320x240 Display Screen
- - 4 Physical touch buttons
- - External battery pack
+
+  - Raspberry Pi  
+  - Pi WiFi dongle (optional, but required for online mode)
+  - Adafruit TFT 2.8inch 320x240 Display Screen
+  - 4 Physical touch buttons
+  - External battery pack
  
 ## Tech Stack
-- Python3
-- Wand Image library
-- FIO addresses
-- Adafruit TFT display and drivers
-- InkScape
-- Eagle PCB CAD
-- Ethplorer API
+
+ - Python3
+ - Wand Image library
+ - FIO addresses
+ - Adafruit TFT display and drivers
+ - InkScape
+ - Eagle PCB CAD
+ - Ethplorer API
 
 # Features
 ## Attendee Badge View
-<img src="https://github.com/ronaldstoner/ETHDenver2021/blob/main/examples/badge_ex.jpeg?raw=true" width="300">  
+<img src="https://github.com/ronaldstoner/ETHDenver2021/blob/main/examples/badge_ex.jpeg?raw=true" width="300">}  
   - Programatically generated from attendee JSON data
   - Can be scripted to run in batches and pre-loaded to badges -OR-
   - Generate badge attendee data and image on the fly
   - Interact with vendors (POAP/NFTs/scanning badge QR codes)
 
 ## FIO Address View
-<img src="https://github.com/ronaldstoner/ETHDenver2021/blob/main/examples/fio_ex.jpeg?raw=true" width="300">  
+<img src="https://github.com/ronaldstoner/ETHDenver2021/blob/main/examples/fio_ex.jpeg?raw=true" width="300">}  
   - FIO integration bounty
   - Can be scripted to run in batches and pre-loaded to badges -OR-
   - Generate badge attendee data and image on the fly
