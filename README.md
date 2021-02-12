@@ -70,7 +70,7 @@ The prototype was designed over the course of a few days by TeamBadge using the 
 
 ## NFT Viewer/Screensaver
 
-<img src="https://github.com/ronaldstoner/ETHDenver2021/blob/main/examples/bal_ex.jpeg?raw=true" width="300">}  
+<img src="https://github.com/ronaldstoner/ETHDenver2021/blob/main/nft_images/maker.png?raw=true" width="300">}  
   - Downloaded NFTs associated with ETH address (via online mode w/ Ethplorer API)
   	- Pulls coin website and image from token metadata
   - Displays cached token images (offline mode)
