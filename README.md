@@ -13,7 +13,7 @@ Paul Pham - @cryptogoth (GitHub)
 ## Hackathon Links
 Github - https://github.com/ronaldstoner/ETHDenver2021  
 Presentation - https://docs.google.com/presentation/d/1lKfAteGLD9OGmtw0hz3KvVq7pTEihyAI2j_oX4J-8Pw/edit?usp=sharing  
-Demo Video -    
+Demo Video - https://www.youtube.com/watch?v=E1VwFemwl1w  
 PCB Silkscreen -   
 
 ## Prototype
