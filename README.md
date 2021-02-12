@@ -69,7 +69,8 @@ The prototype was designed over the course of a few days by TeamBadge using the 
   - NFT hunt
 
 ## NFT Viewer/Screensaver
-<img src="https://github.com/ronaldstoner/ETHDenver2021/blob/main/examples/bal_ex.jpeg?raw=true" width="300">  
+
+<img src="https://github.com/ronaldstoner/ETHDenver2021/blob/main/examples/bal_ex.jpeg?raw=true" width="300">}  
   - Downloaded NFTs associated with ETH address (via online mode w/ Ethplorer API)
   	- Pulls coin website and image from token metadata
   - Displays cached token images (offline mode)
@@ -77,7 +78,7 @@ The prototype was designed over the course of a few days by TeamBadge using the 
   - Attendees can bling out their badge!
    
 ## PCB Silkscreen Proof of Concept
-<img src="https://github.com/ronaldstoner/ETHDenver2021/blob/main/examples/ufo_silkscreen.png?raw=true" width="400">
+<img src="https://github.com/ronaldstoner/ETHDenver2021/blob/main/examples/ufo_silkscreen.png?raw=true" width="400">?
   
 While the prototyping phase took place on a Raspberry Pi, the ultimate end goal is to produce and fabricate a custom PCB hardware badge design for ETHDenver. Unfortunately due to the length of the hackathon we were not able to fabricate a physical badge, but did want to provide a silkscreen proof of concept and images to convey what a physical badge may look like.
 
